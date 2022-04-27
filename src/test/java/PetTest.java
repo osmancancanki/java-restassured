@@ -20,13 +20,13 @@ public class PetTest {
         System.out.println(id);
 
         System.out.println("----------Create Pet Id----------");
-        PetRequest.createPetId(id);
+        PetRequest.createPet(id);
 
         System.out.println("----------Update Pet Id----------");
-        PetRequest.updatePetId(id);
+        PetRequest.updatePet(id);
 
         System.out.println("----------Delete Pet Id----------");
-        PetRequest.deletePetId(id);
+        PetRequest.deletePet(id);
     }
 
     @Test
@@ -39,6 +39,4 @@ public class PetTest {
         System.out.println("----------Get Pet By Id----------");
         PetRequest.getAvailablePetById(petId);
     }
-
-
 }

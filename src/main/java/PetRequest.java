@@ -24,10 +24,9 @@ public class PetRequest {
 
         }while (statusCode!=404 && errorMsg!="Pet not found");
         return PetIdList;
-
 }
 
-    public static void updatePetId(int petId){
+    public static void updatePet(int petId){
 
         Response response = RestAssured.given()
                 .contentType("application/json")
@@ -60,7 +59,7 @@ public class PetRequest {
         }
     }
 
-    public static void deletePetId(int petId){
+    public static void deletePet(int petId){
 
         Response response = RestAssured.given()
                 .contentType("application/json")
@@ -75,7 +74,7 @@ public class PetRequest {
         }
     }
 
-    public static void createPetId(int petId){
+    public static void createPet(int petId){
 
         Response response = RestAssured.given()
                 .contentType("application/json")
