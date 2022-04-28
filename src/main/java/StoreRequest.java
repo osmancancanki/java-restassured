@@ -5,59 +5,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StoreRequest {
+    RequestHelper requestHelper = new RequestHelper();
 
-    public static void getInventory(){
-
-        Response response = RestAssured.given()
-                .when().log().all().get("store/inventory")
-                .then().statusCode(200).extract().response().prettyPeek();
-
-        if (response.getStatusCode()==200){
-            System.out.println("Succeed!!");
-        } else {
-            System.out.println("Failed!!");
-        }
+    public void getInventory() {
+        RestAssured.given().spec(requestHelper.requestSpecification)
+                .when().get("v2/store/inventory")
+                .then().spec(requestHelper.responseSpecification).log().all();
     }
 
-    public static void getOrderById(int orderId){
-        Response response = RestAssured.given()
-                .when().log().all().get("store/order/"+orderId)
-                .then().extract().response().prettyPeek();
+    public void getOrderById(int orderId) {
+        Response response = RestAssured.given().spec(requestHelper.requestSpecification)
+                .when().get("v2/store/order/" + orderId)
+                .then().spec(requestHelper.responseSpecification).extract().response();
 
         String statusMessage = response.jsonPath().getString("message");
         int statusCode = response.getStatusCode();
 
-        if (orderId < 1 && 9 < orderId && statusCode==400&&statusMessage=="Invalid ID supplied"){
+        if (orderId < 1 && 9 < orderId && statusCode == 400 && statusMessage == "Invalid ID supplied") {
             System.out.println("Succeed!!");
-        }
-        else if(1<=orderId&&orderId<=9&&statusCode==404&&statusMessage=="Order not found"){
-            System.out.println("Succeed!!");
-        }
-        else {
-            System.out.println("Failed!!");
-        }
-    }
-
-    public static void deleteOrder(String orderId){
-
-        Response response = RestAssured
-                .given().contentType("application/json")
-                .when().delete("store/order/"+orderId)
-                .then().statusCode(200).extract().response();
-
-        if (response.getStatusCode()==200){
+        } else if (1 <= orderId && orderId <= 9 && statusCode == 404 && statusMessage == "Order not found") {
             System.out.println("Succeed!!");
         } else {
             System.out.println("Failed!!");
         }
     }
 
-    public static List<String> createOrder(){
+    public void deleteOrder(String orderId) {
+
+        RestAssured.given().spec(requestHelper.requestSpecification)
+                .when().delete("v2/store/order/" + orderId)
+                .then().spec(requestHelper.responseSpecification).log().all();
+    }
+
+    public List<String> createOrder() {
         List<String> OrderIdList = new ArrayList<>();
         String orderId;
-        Response response = RestAssured.given()
-                .contentType("application/json").header("api-key","special-key")
-                .when().log().all()
+        Response response = RestAssured.given().spec(requestHelper.requestSpecification)
+                .when()
                 .body("{\n" +
                         "  \"id\": 0,\n" +
                         "  \"petId\": 0,\n" +
@@ -66,17 +50,11 @@ public class StoreRequest {
                         "  \"status\": \"placed\",\n" +
                         "  \"complete\": true\n" +
                         "}")
-                .post("store/order")
-                .prettyPeek().then().statusCode(200).extract().response();
+                .post("v2/store/order")
+                .then().spec(requestHelper.responseSpecification).extract().response();
 
         orderId = response.jsonPath().getString("id");
         OrderIdList.add(orderId);
-
-        if (response.getStatusCode()==200){
-            System.out.println("Succeed!!");
-        } else {
-            System.out.println("Failed!!");
-        }
         return OrderIdList;
     }
 }

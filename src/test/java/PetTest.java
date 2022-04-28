@@ -1,42 +1,36 @@
-import io.restassured.RestAssured;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
 public class PetTest {
-
-    @Before
-    public void setUp() {
-        RestAssured.baseURI = "https://petstore.swagger.io";
-    }
+    PetRequest petRequest = new PetRequest();
 
     @Test
-    public void getPetByIdTest(){
+    public void getPetByIdTest() {
 
         System.out.println("----------Get Pet By Id----------");
-        List<Integer> petList = PetRequest.getPetById(1);
+        List<Integer> petList = petRequest.getPetById(1);
         int id = petList.get(0);
         System.out.println(id);
 
         System.out.println("----------Create Pet Id----------");
-        PetRequest.createPet(id);
+        petRequest.createPet(id);
 
         System.out.println("----------Update Pet Id----------");
-        PetRequest.updatePet(id);
+        petRequest.updatePet(id);
 
         System.out.println("----------Delete Pet Id----------");
-        PetRequest.deletePet(id);
+        petRequest.deletePet(id);
     }
 
     @Test
-    public void getPetByStatusTest(){
+    public void getPetByStatusTest() {
 
         System.out.println("----------Get Pet By Status----------");
-        List<String> availablePetList = PetRequest.getPetByStatus("available");
+        List<String> availablePetList = petRequest.getPetByStatus("available");
         String petId = availablePetList.get(0);
 
         System.out.println("----------Get Pet By Id----------");
-        PetRequest.getAvailablePetById(petId);
+        petRequest.getAvailablePetById(petId);
     }
 }
