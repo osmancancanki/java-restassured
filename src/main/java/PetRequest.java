@@ -1,4 +1,5 @@
 import io.restassured.RestAssured;
+import io.restassured.internal.assertion.Assertion;
 import io.restassured.response.Response;
 
 import java.util.ArrayList;
@@ -95,5 +96,11 @@ public class PetRequest {
         RestAssured.given().spec(requestHelper.requestSpecification)
                 .when().get("v2/pet/" + petId)
                 .then().spec(requestHelper.responseSpecification).log().all();
+    }
+
+    public void getPetNotExist(String petId) {
+        RestAssured.given().spec(requestHelper.requestSpecification)
+                .when().get("v2/pet/" + petId)
+                .then().spec(requestHelper.negativeSpecification).log().all();
     }
 }

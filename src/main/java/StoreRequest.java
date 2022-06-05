@@ -14,20 +14,9 @@ public class StoreRequest {
     }
 
     public void getOrderById(int orderId) {
-        Response response = RestAssured.given().spec(requestHelper.requestSpecification)
+        RestAssured.given().spec(requestHelper.requestSpecification)
                 .when().get("v2/store/order/" + orderId)
-                .then().spec(requestHelper.responseSpecification).extract().response();
-
-        String statusMessage = response.jsonPath().getString("message");
-        int statusCode = response.getStatusCode();
-
-        if (orderId < 1 && 9 < orderId && statusCode == 400 && statusMessage == "Invalid ID supplied") {
-            System.out.println("Succeed!!");
-        } else if (1 <= orderId && orderId <= 9 && statusCode == 404 && statusMessage == "Order not found") {
-            System.out.println("Succeed!!");
-        } else {
-            System.out.println("Failed!!");
-        }
+                .then().spec(requestHelper.negativeSpecification).log().all();
     }
 
     public void deleteOrder(String orderId) {

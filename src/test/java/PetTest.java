@@ -33,4 +33,10 @@ public class PetTest {
         System.out.println("----------Get Pet By Id----------");
         petRequest.getAvailablePetById(petId);
     }
+
+    @Test
+    public void negativePetTest() {
+        System.out.println("----------Get Pet By Id----------");
+        petRequest.getPetNotExist("1");
+    }
 }

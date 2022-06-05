@@ -7,7 +7,7 @@ import io.restassured.specification.ResponseSpecification;
 
 public class RequestHelper {
     public RequestSpecification requestSpecification;
-    public ResponseSpecification responseSpecification;
+    public ResponseSpecification responseSpecification, negativeSpecification;
     ConfigReader configReader = new ConfigReader();
 
     public RequestHelper() {
@@ -22,5 +22,11 @@ public class RequestHelper {
                 .expectContentType(ContentType.JSON)
                 .log(LogDetail.BODY);
         responseSpecification = responseSpecBuilder.build();
+
+        ResponseSpecBuilder negativeSpecBuilder = new ResponseSpecBuilder()
+                .expectStatusCode(404)
+                .expectContentType(ContentType.JSON)
+                .log(LogDetail.BODY);
+        negativeSpecification = negativeSpecBuilder.build();
     }
 }
