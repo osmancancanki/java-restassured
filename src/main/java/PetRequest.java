@@ -1,5 +1,4 @@
 import io.restassured.RestAssured;
-import io.restassured.internal.assertion.Assertion;
 import io.restassured.response.Response;
 
 import java.util.ArrayList;
