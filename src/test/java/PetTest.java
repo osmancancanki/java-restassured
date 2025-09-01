@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -6,6 +7,7 @@ public class PetTest {
     PetRequest petRequest = new PetRequest();
 
     @Test
+    @DisplayName("Find a pet by Id")
     public void getPetByIdTest() {
 
         System.out.println("----------Get Pet By Id----------");
