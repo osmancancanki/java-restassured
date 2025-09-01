@@ -5,8 +5,11 @@ import java.util.List;
 public class StoreTest {
     StoreRequest storeRequest = new StoreRequest();
 
+    /*
+    Package based hierarchy
+     */
     @Test
-    public void storeTest(){
+    public void storeTest() {
 
         System.out.println("----------Create Order----------");
         List<String> orderList = storeRequest.createOrder();
@@ -20,7 +23,7 @@ public class StoreTest {
     }
 
     @Test
-    public void negativeStoreTest(){
+    public void negativeStoreTest() {
 
         System.out.println("----------Get Order By Id----------");
         storeRequest.getOrderById(1);
